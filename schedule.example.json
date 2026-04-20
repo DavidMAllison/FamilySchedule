@@ -1,0 +1,228 @@
+{
+  "schema_version": "1.0",
+  "last_updated": "2026-04-18",
+  "people": ["Parent1", "Parent2", "Child1", "Child2"],
+
+  "daily_schedules": {
+    "Parent2": {
+      "office_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "office_hours": "08:00-15:00",
+      "home_arrival": "15:30-16:00"
+    },
+    "Child1": {
+      "school_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "school_hours": "08:30-16:30"
+    },
+    "Child2": {
+      "school_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "school_hours": "07:00-15:30"
+    }
+  },
+
+  "standing": {
+    "Sunday": [
+      {
+        "person": "Child1",
+        "activity": "Cheer",
+        "start": "15:00",
+        "end": "17:30",
+        "affects_dinner": true
+      }
+    ],
+    "Monday": [
+      {
+        "person": "Child1",
+        "activity": "Soccer practice",
+        "start": "19:00",
+        "end": "20:00",
+        "affects_dinner": true,
+        "note": "Child1 and Parent1 — start dinner by 5:30 PM"
+      },
+      {
+        "person": "Parent1",
+        "activity": "Soccer practice (coaching Child1)",
+        "start": "19:00",
+        "end": "20:00",
+        "affects_dinner": true
+      }
+    ],
+    "Tuesday": [
+      {
+        "person": "Child2",
+        "activity": "Soccer practice",
+        "start": "17:00",
+        "end": "18:30",
+        "affects_dinner": true,
+        "note": "Hope Church Field 3, Mason — start dinner after 6:30 PM"
+      }
+    ],
+    "Wednesday": [],
+    "Thursday": [
+      {
+        "person": "Child2",
+        "activity": "Soccer practice",
+        "start": "17:00",
+        "end": "18:30",
+        "affects_dinner": true,
+        "note": "Hope Church Field 3, Mason — start dinner after 6:30 PM"
+      }
+    ],
+    "Friday": [
+      {
+        "person": "Child1",
+        "activity": "Cheer",
+        "start": "17:00",
+        "end": "19:00",
+        "frequency": "biweekly",
+        "frequency_note": "Every other Friday, started Jan 16 2026",
+        "affects_dinner": true
+      }
+    ]
+  },
+
+  "weekly_overrides": {
+    "2026-04-13": [
+      {
+        "person": "Child2",
+        "note": "Soccer league game 7:00 PM at Walter J. Long — wear black, bring yellow and pinnie",
+        "affects_dinner": true
+      }
+    ],
+    "2026-04-18": [
+      {
+        "person": "Child2",
+        "note": "Soccer league game 1:30-2:30 PM at Posey Hartman Soccer Complex, Lebanon — wear yellow, bring black and pinnie",
+        "affects_dinner": false
+      },
+      {
+        "person": "Child1",
+        "note": "Soccer game 12:00-1:00 PM at Symmes C vs GW07",
+        "affects_dinner": false
+      },
+      {
+        "person": "Parent1",
+        "note": "Coaching Child1 soccer game 12:00-1:00 PM at Symmes C",
+        "affects_dinner": false
+      }
+    ],
+    "2026-04-19": [
+      {
+        "person": "Child2",
+        "note": "Soccer league game 4:30-5:30 PM at Posey Hartman Soccer Complex, Lebanon — wear yellow, bring black and pinnie",
+        "affects_dinner": true
+      }
+    ],
+    "2026-04-25": [
+      {
+        "person": "Child2",
+        "note": "EPIC Cup Tournament, Oxford OH — game times TBD (released week before)",
+        "affects_dinner": true
+      },
+      {
+        "person": "Child1",
+        "note": "Soccer game 1:15-2:15 PM at Symmes A vs GW03",
+        "affects_dinner": false
+      },
+      {
+        "person": "Parent1",
+        "note": "Coaching Child1 soccer game 1:15-2:15 PM at Symmes A",
+        "affects_dinner": false
+      }
+    ],
+    "2026-04-26": [
+      {
+        "person": "Child2",
+        "note": "EPIC Cup Tournament, Oxford OH — game times TBD (released week before)",
+        "affects_dinner": true
+      }
+    ],
+    "2026-05-01": [
+      {
+        "person": "Child2",
+        "note": "Soccer league game 7:00-8:00 PM at Posey Hartman Soccer Complex, Lebanon — wear yellow, bring black and pinnie",
+        "affects_dinner": true
+      }
+    ],
+    "2026-05-02": [
+      {
+        "person": "Child2",
+        "note": "Soccer league game 10:30-11:30 AM at Posey Hartman Soccer Complex, Lebanon — wear yellow, bring black and pinnie",
+        "affects_dinner": false
+      },
+      {
+        "person": "Child1",
+        "note": "Soccer game 3:15-4:15 PM at Symmes A vs GW04",
+        "affects_dinner": true
+      },
+      {
+        "person": "Parent1",
+        "note": "Coaching Child1 soccer game 3:15-4:15 PM at Symmes A",
+        "affects_dinner": true
+      }
+    ],
+    "2026-05-03": [
+      {
+        "person": "Child2",
+        "note": "Soccer league game 1:20-2:20 PM at Miami Whitewater Soccer Complex, Cleves — wear black, bring yellow and pinnie",
+        "affects_dinner": false
+      }
+    ],
+    "2026-05-09": [
+      {
+        "person": "Child1",
+        "note": "Soccer game 12:00-1:00 PM at Symmes C vs GW06",
+        "affects_dinner": false
+      },
+      {
+        "person": "Parent1",
+        "note": "Coaching Child1 soccer game 12:00-1:00 PM at Symmes C",
+        "affects_dinner": false
+      }
+    ],
+    "2026-05-15": [
+      {
+        "person": "Child2",
+        "note": "Liberty Cup Tournament, Lebanon OH — game times TBD (released week before)",
+        "affects_dinner": true
+      }
+    ],
+    "2026-05-16": [
+      {
+        "person": "Child2",
+        "note": "Liberty Cup Tournament, Lebanon OH — game times TBD (released week before)",
+        "affects_dinner": true
+      },
+      {
+        "person": "Child1",
+        "note": "Soccer game 9:30-10:30 AM at Symmes A vs GW08",
+        "affects_dinner": false
+      },
+      {
+        "person": "Parent1",
+        "note": "Coaching Child1 soccer game 9:30-10:30 AM at Symmes A",
+        "affects_dinner": false
+      }
+    ],
+    "2026-05-17": [
+      {
+        "person": "Child2",
+        "note": "Liberty Cup Tournament, Lebanon OH — game times TBD (released week before)",
+        "affects_dinner": true
+      }
+    ],
+    "2026-05-22": [
+      {
+        "person": "Child2",
+        "note": "Soccer league game 7:00-8:00 PM at Miami Meadows Park, Milford — wear black, bring yellow and pinnie",
+        "affects_dinner": true
+      }
+    ],
+    "2026-05-23": [
+      {
+        "person": "Child2",
+        "note": "Soccer league game 9:00-10:00 AM at Finley Ray Park, Milford — wear black, bring yellow and pinnie",
+        "affects_dinner": false
+      }
+    ]
+  }
+}
