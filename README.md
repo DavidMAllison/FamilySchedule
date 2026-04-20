@@ -24,6 +24,8 @@ A single source of truth for a busy family's weekly schedule — built to feed a
 
 **ICS pull for game details.** Jersey colors and arrive-by times come from the team's PlayMetrics calendar feed rather than being manually maintained. Game entries in `weekly_overrides` are populated from that feed, so the schedule reflects what the team app publishes.
 
+**Privacy boundary between AI and personal calendars.** Rather than granting Claude Code direct access to iCloud Calendar or Google Calendar, `schedule.json` is the only scheduling data the AI ever sees. It contains exactly what downstream tools need — activity names, times, and dinner impact — and nothing else. No event descriptions, no attendees, no location history, no calendar metadata. The file is also gitignored, so it never leaves the local machine.
+
 ## Repository Structure
 
 ```
@@ -88,6 +90,8 @@ Remove entries after the week passes to keep the file clean.
 
 ## Integration Points
 
-**MenuBuilder** — reads `affects_dinner: true` entries before generating the weekly meal plan; flags constrained nights for quick or flexible meals.
+**MenuBuilder** — before generating the weekly meal plan, reads the standing schedule and that week's overrides to identify constrained nights. Nights with `affects_dinner: true` get flagged for quick or flexible meals. Without this, the meal planner has no awareness of whether a given night has an early practice, a late game, or a parent traveling — it would propose recipes regardless of whether anyone has time to cook them.
 
-**SMS Assistant** — queries the schedule for a given day or week; accepts natural language overrides ("Add that Parent2 is out Thursday") that write back to `weekly_overrides`.
+**SMS Assistant** — queries `schedule.json` to answer questions like "what's happening Thursday?" or "does anything affect dinner this week?" Also writes back to `weekly_overrides` from natural language input ("Add that Parent2 is out Thursday"), keeping the file current without manually editing JSON. The assistant never connects to the family's actual calendars — FamilySchedule is the only scheduling context it has access to.
+
+Both integrations read the same local file. There is no API, no sync service, and no shared database — just a JSON file that Claude Code knows how to read and update.
