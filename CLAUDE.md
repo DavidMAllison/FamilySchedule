@@ -13,21 +13,19 @@ Recurring weekly activities keyed by day. Each entry:
 - `person` — family member
 - `activity` — name of activity
 - `start` / `end` — 24h time strings
-- `affects_dinner` — boolean, used by meal planning to flag timing constraints
 - `frequency` — omit if weekly; `"biweekly"` with `frequency_note` for alternating weeks
-- `note` — optional meal planning hint
+- `note` — optional free text
 
 ### `weekly_overrides`
 One-off changes keyed by ISO date (`YYYY-MM-DD`). Each entry:
 - `person`
 - `note` — free text description
-- `affects_dinner` — boolean
 
 Example:
 ```json
 "weekly_overrides": {
   "2026-04-22": [
-    { "person": "Parent1", "note": "Work trip, back Thursday", "affects_dinner": true }
+    { "person": "Parent1", "note": "Work trip, back Thursday" }
   ]
 }
 ```
@@ -35,7 +33,7 @@ Example:
 ## Integration Points
 
 ### Meal Planning (MenuBuilder)
-- Use `affects_dinner: true` entries to flag busy nights when running meal suggestions
+- Read `standing` and `weekly_overrides` for the target week; MenuBuilder reasons about evening constraints directly from activity times and notes
 - Check `weekly_overrides` for the target week before generating a plan
 
 ### SMS Assistant (future)

@@ -4,11 +4,9 @@ A single source of truth for a busy family's weekly schedule — built to feed a
 
 ## What It Does
 
-**Standing schedule:** Captures recurring weekly activities per person — sports practices, school hours, work schedules — with start/end times and a flag for whether each activity affects dinner timing.
+**Standing schedule:** Captures recurring weekly activities per person — sports practices, school hours, work schedules — with start/end times.
 
 **Weekly overrides:** One-off changes keyed by date — game days, tournaments, work trips, school events — layered on top of the standing schedule without modifying it.
-
-**Dinner constraint signaling:** Every entry carries an `affects_dinner` boolean. Downstream tools (meal planner, SMS assistant) query this to know which nights need quick meals, later starts, or simpler logistics.
 
 **Calendar integration:** Game entries include jersey color instructions pulled from the team's ICS feed, so the schedule doubles as a game-day reference.
 
@@ -17,8 +15,6 @@ A single source of truth for a busy family's weekly schedule — built to feed a
 **JSON as single source of truth.** One file, two sections: `standing` for recurring patterns and `weekly_overrides` for one-offs. Downstream tools read the same file — no syncing, no duplication.
 
 **Overrides layer, not replace.** Standing schedule stays clean. Weekly exceptions are keyed by ISO date and removed after the week passes. The file stays small and readable year-round.
-
-**Affects-dinner as the key signal.** Rather than exposing full schedule details to every downstream tool, a single boolean surfaces what most tools actually need — whether a given night is constrained. The meal planner uses this to avoid complex recipes on busy nights; the SMS assistant uses it to answer "what's happening this week."
 
 **People as a flat list.** No nested family structure — just a `people` array and a `person` field on each entry. Simple to query, easy to extend.
 
@@ -47,8 +43,8 @@ Query examples (via Claude Code or any JSON tool):
 # What's happening this Saturday?
 # Check weekly_overrides for the date, then standing for the day of week
 
-# Which nights this week affect dinner?
-# Filter both standing and weekly_overrides for affects_dinner: true
+# Which nights this week are constrained?
+# Read standing and weekly_overrides; reason about times and notes directly
 ```
 
 ## Schema
@@ -64,7 +60,6 @@ Recurring weekly activities keyed by day:
     "activity": "Soccer practice",
     "start": "19:00",
     "end": "20:00",
-    "affects_dinner": true,
     "note": "Start dinner by 5:30 PM"
   }
 ]
@@ -80,8 +75,7 @@ One-off changes keyed by ISO date:
 "2026-04-25": [
   {
     "person": "Child2",
-    "note": "Tournament, Oxford OH — game times TBD",
-    "affects_dinner": true
+    "note": "Tournament, Oxford OH — game times TBD"
   }
 ]
 ```
@@ -90,8 +84,12 @@ Remove entries after the week passes to keep the file clean.
 
 ## Integration Points
 
-**MenuBuilder** — before generating the weekly meal plan, reads the standing schedule and that week's overrides to identify constrained nights. Nights with `affects_dinner: true` get flagged for quick or flexible meals. Without this, the meal planner has no awareness of whether a given night has an early practice, a late game, or a parent traveling — it would propose recipes regardless of whether anyone has time to cook them.
+**MenuBuilder** — before generating the weekly meal plan, reads the standing schedule and that week's overrides to identify constrained nights. It reasons about timing directly from activity times and notes, flagging nights that need quick or flexible meals.
 
 **SMS Assistant** — queries `schedule.json` to answer questions like "what's happening Thursday?" or "does anything affect dinner this week?" Also writes back to `weekly_overrides` from natural language input ("Add that Parent2 is out Thursday"), keeping the file current without manually editing JSON. The assistant never connects to the family's actual calendars — FamilySchedule is the only scheduling context it has access to.
 
 Both integrations read the same local file. There is no API, no sync service, and no shared database — just a JSON file that Claude Code knows how to read and update.
+
+## Future
+
+**Apple Shortcut calendar hook** — rather than manually telling the assistant about schedule changes, an Apple Shortcut could fire when a calendar event is created or modified, extract just the relevant fields (person, activity, time, date), and pass them to a local script that writes to `weekly_overrides`. No direct calendar access for Claude — only the distilled event data crosses the boundary. Pairs well with the SMS path: either channel can update the file without exposing the full calendar.
